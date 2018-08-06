@@ -11,7 +11,8 @@ const formControl = (props) => {
                     className="form-control col-5 col-sm-5" 
                     name={ props.fieldName }
                     value={ props.fieldValue }
-                    onChange={ props.fieldChanged } />
+                    onChange={ props.fieldChanged } 
+                    placeholder={ props.inputPlaceholder }/>
             </div>                        
             <ErrorControl errorMessage={ props.errorMessage } />
         </div>

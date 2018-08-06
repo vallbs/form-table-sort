@@ -24,6 +24,15 @@ class Form extends Component {
                 fieldsValid.lastNameValid = fieldValue.length >= 5 && fieldValue.length < 20;
                 formErrors.lastNameError = fieldsValid.lastNameValid ? "" : "Last Name must be 5-20 characters long";
                 break;
+            case "age":
+                fieldsValid.ageValid = fieldValue >= 18;
+                formErrors.ageError = fieldsValid.ageValid ? "" : "Age must be 18+";
+                break;
+            case "phone":
+                const phoneRegEx = /^\(?([0-9]{3})\)?[ ]?([0-9]{3})[-]?([0-9]{2})[-]?([0-9]{2})$/;
+                fieldsValid.phoneValid = fieldValue.match(phoneRegEx);
+                formErrors.phoneError = fieldsValid.phoneValid ? "" : "Phone format must be: XXX XXX-XX-XX";
+                break;
             default:
                 break;
         }
@@ -56,7 +65,8 @@ class Form extends Component {
                         inputType="text"
                         fieldValue={ this.state.firstName }
                         fieldChanged={ e => this.handleInputChange(e)} 
-                        errorMessage={ this.state.formErrors.firstNameError }/>
+                        errorMessage={ this.state.formErrors.firstNameError }
+                        inputPlaceholder="3-20 characters long"/>
                     
                     <FormControl 
                         validationClassName={ this.formValidationClass(this.state.fieldsValid.lastNameValid, "form-group row") }
@@ -65,7 +75,27 @@ class Form extends Component {
                         inputType="text"
                         fieldValue={ this.state.lastName }
                         fieldChanged={ e => this.handleInputChange(e)} 
-                        errorMessage={ this.state.formErrors.lastNameError }/>
+                        errorMessage={ this.state.formErrors.lastNameError }
+                        inputPlaceholder="5-20 characters long"/>
+                    
+                    <FormControl 
+                        validationClassName={ this.formValidationClass(this.state.fieldsValid.phoneValid, "form-group row") }
+                        fieldName="phone"
+                        label="Phone"
+                        inputType="text"
+                        fieldValue={ this.state.phone }
+                        fieldChanged={ e => this.handleInputChange(e)} 
+                        errorMessage={ this.state.formErrors.phoneError }
+                        inputPlaceholder="XXX XXX-XX-XX format"/>
+                    
+                    <FormControl 
+                        validationClassName={ this.formValidationClass(this.state.fieldsValid.ageValid, "form-group row") }
+                        fieldName="age"
+                        label="Age"
+                        inputType="number"
+                        fieldValue={ this.state.age }
+                        fieldChanged={ e => this.handleInputChange(e)} 
+                        errorMessage={ this.state.formErrors.ageError }/>
 
                     <button type="submit" className="btn btn-primary" disabled={ !this.state.formIsValid } >
                         Create Person
@@ -78,10 +108,22 @@ class Form extends Component {
     state = {
         firstName: "",
         lastName: "",
+        phone: "",
+        age: 0,
         gender: "",
         age: 0,
-        fieldsValid: { firstNameValid: false, lastNameValid: false },
-        formErrors: { firstNameError: "", lastNameError: ""},
+        fieldsValid: { 
+            firstNameValid: false, 
+            lastNameValid: false, 
+            phoneValid: false,
+            ageValid: false 
+        },
+        formErrors: { 
+            firstNameError: "", 
+            lastNameError: "", 
+            phoneError: "",
+            ageError: ""
+        },
         formIsValid: false
     }
 }
