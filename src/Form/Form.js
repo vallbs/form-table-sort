@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 import ErrorControl from './ErrorControl';
+import FormControl from './FormControl';
 
 class Form extends Component {
     handleInputChange = e => {
@@ -28,11 +29,8 @@ class Form extends Component {
         }
 
         const formIsValid = Object.keys(fieldsValid).reduce( (accum, currentValue) => {
-            //console.log(currentValue, fieldsValid[currentValue]);
             return accum && fieldsValid[currentValue];
         }, true);
-
-        console.log(formIsValid);
 
         this.setState({
             fieldsValid,            
@@ -51,32 +49,27 @@ class Form extends Component {
         return (
             <div className="container">
                 <form className="personForm">
-                    <div className={ this.formValidationClass(this.state.fieldsValid.firstNameValid, "form-group row") } >
-                        <label htmlFor="firstName" className="col-form-label col-2 col-sm-2">First Name: </label>
-                        <div className="col-sm-4">
-                            <input 
-                                type="text" 
-                                className="form-control col-5 col-sm-5" 
-                                name="firstName"
-                                value={ this.state.firstName }
-                                onChange={ e => this.handleInputChange(e)} />
-                        </div>                        
-                        <ErrorControl errorMessage={this.state.formErrors.firstNameError} />
-                    </div>
-                    <div className={ this.formValidationClass(this.state.fieldsValid.lastNameValid, "form-group row") }>
-                        <label htmlFor="lastName" className="col-form-label col-2 col-sm-2">Last Name: </label>
-                        <div className="col-sm-4">
-                            <input 
-                                type="text" 
-                                className="form-control col-5 col-sm-5" 
-                                name="lastName"
-                                value={ this.state.lastName }
-                                onChange={ e => this.handleInputChange(e)} />
-                        </div>
-                        <ErrorControl errorMessage={this.state.formErrors.lastNameError} />
-                    </div>
+                    <FormControl 
+                        validationClassName={ this.formValidationClass(this.state.fieldsValid.firstNameValid, "form-group row") }
+                        fieldName="firstName"
+                        label="First Name"
+                        inputType="text"
+                        fieldValue={ this.state.firstName }
+                        fieldChanged={ e => this.handleInputChange(e)} 
+                        errorMessage={ this.state.formErrors.firstNameError }/>
+                    
+                    <FormControl 
+                        validationClassName={ this.formValidationClass(this.state.fieldsValid.lastNameValid, "form-group row") }
+                        fieldName="lastName"
+                        label="Last Name"
+                        inputType="text"
+                        fieldValue={ this.state.lastName }
+                        fieldChanged={ e => this.handleInputChange(e)} 
+                        errorMessage={ this.state.formErrors.lastNameError }/>
 
-                    <button type="submit" className="btn btn-primary" disabled={ !this.state.formIsValid } >Create Person</button>
+                    <button type="submit" className="btn btn-primary" disabled={ !this.state.formIsValid } >
+                        Create Person
+                    </button>
                 </form>
             </div>
         );
