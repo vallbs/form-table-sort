@@ -5,8 +5,17 @@ import FormControl from './FormControl';
 
 class Form extends Component {
     handleInputChange = e => {
-        this.validateField(e.target.name, e.target.value);
-        this.setState({ [e.target.name]: e.target.value });
+        const fieldName = e.target.name;
+        const fieldValue = e.target.value;
+        if(fieldName === "gender") {
+            this.setState({
+                gender: e.target.checked
+            })
+        } else {
+            this.validateField(fieldName, fieldValue);
+            this.setState({ [fieldName]: fieldValue });
+        }
+        
     }
 
     validateField = (fieldName, fieldValue) => {
@@ -97,6 +106,25 @@ class Form extends Component {
                         fieldChanged={ e => this.handleInputChange(e)} 
                         errorMessage={ this.state.formErrors.ageError }/>
 
+                    <FormControl 
+                        validationClassName="form-group row"
+                        fieldName="gender"
+                        label="Gender"
+                        inputType="checkbox"
+                        fieldChanged={ e => this.handleInputChange(e)}/>
+
+                    {/* <div className="form-group row" >
+                        <label className="col-form-label col-2 col-sm-2">Gender :</label>
+                        <div className="col-sm-4">
+                            <div className="from-check">
+                                <label htmlFor="gender" className="form-check-label">
+                                    <input className="form-check-input" type="checkbox" name="gender"
+                                    onChange={ e => this.handleInputChange(e)}/>
+                                </label>
+                            </div>
+                        </div>
+                    </div> */}
+
                     <button type="submit" className="btn btn-primary" disabled={ !this.state.formIsValid } >
                         Create Person
                     </button>
@@ -110,19 +138,21 @@ class Form extends Component {
         lastName: "",
         phone: "",
         age: 0,
-        gender: "",
+        gender: false,
         age: 0,
         fieldsValid: { 
             firstNameValid: false, 
             lastNameValid: false, 
             phoneValid: false,
-            ageValid: false 
+            ageValid: false,
+            // genderValid: false
         },
         formErrors: { 
             firstNameError: "", 
             lastNameError: "", 
             phoneError: "",
-            ageError: ""
+            ageError: "",
+            // genderError: ""
         },
         formIsValid: false
     }
