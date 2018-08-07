@@ -42,6 +42,22 @@ export const deleteContact = (contactId) => {
     }
 }
 
+export const createContact = (contact) => {
+    //console.log("createContact");
+    return dispatch => {
+        dispatch(contactsIsProcessing(false));
+
+        axios.post("/contacts.json", contact)
+            .then(response => {
+                dispatch(createContactSuccess(contact));
+                dispatch(contactsIsProcessing(true));
+            })
+            .catch(error => {
+                dispatch(contactsHasErrored(true));
+            });
+    }
+}
+
 const fetchContactsSuccess = (contacts) => {
     return {
         type: actionTypes.FETCH_CONTACTS_SUCCESS,
@@ -53,6 +69,20 @@ const deleteContactSuccess = (contactId) => {
     return {
         type: actionTypes.DELETE_CONTACT_SUCCESS,
         payload: { contactId }
+    }
+}
+
+const createContactSuccess = (contact) => {
+    return {
+        type: actionTypes.CREATE_CONTACT_SUCCESS,
+        payload: { contact }
+    }
+}
+
+const createContactSuccess = (contact) => {
+    return {
+        type: actionTypes.CREATE_CONTACT_SUCCESS,
+        payload: { contact }
     }
 }
 

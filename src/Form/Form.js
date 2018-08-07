@@ -3,6 +3,8 @@ import axios from '../axios';
 
 import FormControl from './FormControl';
 import './Form.css';
+import { connect } from 'react-redux';
+import * as contactActions from '../actions/contactActions';
 
 class Form extends Component {
     handleInputChange = e => {
@@ -66,7 +68,7 @@ class Form extends Component {
 
     handleCreteRecord = (e) => {
         e.preventDefault();
-        console.log("handleCreteRecord");
+        //console.log("handleCreteRecord");
 
         const record = {
             firstName: this.state.firstName,
@@ -76,22 +78,24 @@ class Form extends Component {
             gender: this.state.gender
         }
 
-        console.log(record);
+        //console.log(record);
 
-        axios.post("/contacts.json", record)
-            .then(response => {
-                console.log(response);
-                this.setState( {
-                    ...this.state,
-                    firstName: "",
-                    lastName: "",
-                    phone: "",
-                    age: null,
-                    gender: false,
-                    age: 0
-                });
-            })
-            .catch(error => console.log(error));
+        // axios.post("/contacts.json", record)
+        //     .then(response => {
+        //         console.log(response);
+        //         this.setState( {
+        //             ...this.state,
+        //             firstName: "",
+        //             lastName: "",
+        //             phone: "",
+        //             age: null,
+        //             gender: false,
+        //             age: 0
+        //         });
+        //     })
+        //     .catch(error => console.log(error));
+
+        this.props.createContact(record);
     }
 
     render() {
@@ -180,4 +184,10 @@ class Form extends Component {
     }
 }
 
-export default Form;
+const mapDispatchToPtops = dispatch => {
+    return {
+        createContact: contact => dispatch(contactActions.createContact(contact))
+    }
+}
+
+export default connect(null, mapDispatchToPtops)(Form);

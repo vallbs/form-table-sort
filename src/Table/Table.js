@@ -130,27 +130,27 @@ class Table extends Component {
                     <tr>
                         <HeaderItem 
                             label="First Name"
-                            sortData={ (data, sortField) => this.handleSortData(this.state.contacts, "firstName") }
+                            sortData={ (data, sortField) => this.handleSortData(this.props.contacts, "firstName") }
                             classes = { this.computeSortClasses("firstName") }
                         />
                         <HeaderItem 
                             label="Last Name"
-                            sortData={ (data, sortField) => this.handleSortData(this.state.contacts, "lastName") }
+                            sortData={ (data, sortField) => this.handleSortData(this.props.contacts, "lastName") }
                             classes = { this.computeSortClasses("lastName") }
                         />
                         <HeaderItem 
                             label="Phone"
-                            sortData={ (data, sortField) => this.handleSortData(this.state.contacts, "phone") }
+                            sortData={ (data, sortField) => this.handleSortData(this.props.contacts, "phone") }
                             classes = { this.computeSortClasses("phone") }
                         />
                         <HeaderItem 
                             label="Age"
-                            sortData={ (data, sortField) => this.handleSortData(this.state.contacts, "age") }
+                            sortData={ (data, sortField) => this.handleSortData(this.props.contacts, "age") }
                             classes = { this.computeSortClasses("age") }
                         />
                         <HeaderItem 
                             label="Gender"
-                            sortData={ (data, sortField) => this.handleSortData(this.state.contacts, "gender") }
+                            sortData={ (data, sortField) => this.handleSortData(this.props.contacts, "gender") }
                             classes = { this.computeSortClasses("gender") }
                         />
                         <th></th>
