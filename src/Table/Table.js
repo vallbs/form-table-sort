@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './Table.css';
+import HeaderItem from './HeaderItem';
 
 class Table extends Component {
     componentDidMount = () => {
@@ -79,24 +80,50 @@ class Table extends Component {
                         <td>{ contact.phone }</td>
                         <td>{ contact.age }</td>
                         <td>{ "" + contact.gender }</td>
-                        <th >
-                            <i className="fa fa-trash"></i>
+                        <td className="DeleteRecord">
+                            
+                            <i className="fa fa-trash"></i> delete
                             {/* <button onClick={ contactId => this.handleDeleteContact(contact.id) }>delete</button> */}
-                        </th>
+                        </td>
                     </tr>
                 );
             });
         }
         return (
             <div className="Table col-sm-10 col-md-10"> 
-                <table className="table table-bordered table-hover table-sm table-responsive ">
+                <table className="table table-bordered table-sm table-responsive ">
                 <thead>
                     <tr>
-                        <th onClick={ (data, sortField) => this.handleSortData(this.state.contacts, "firstName") }>First Name <i className={ this.computeSortClasses("firstName") }></i></th>
+                        <HeaderItem 
+                            label="First Name"
+                            sortData={ (data, sortField) => this.handleSortData(this.state.contacts, "firstName") }
+                            classes = { this.computeSortClasses("firstName") }
+                        />
+                        <HeaderItem 
+                            label="Last Name"
+                            sortData={ (data, sortField) => this.handleSortData(this.state.contacts, "lastName") }
+                            classes = { this.computeSortClasses("lastName") }
+                        />
+                        <HeaderItem 
+                            label="Phone"
+                            sortData={ (data, sortField) => this.handleSortData(this.state.contacts, "phone") }
+                            classes = { this.computeSortClasses("phone") }
+                        />
+                        <HeaderItem 
+                            label="Age"
+                            sortData={ (data, sortField) => this.handleSortData(this.state.contacts, "age") }
+                            classes = { this.computeSortClasses("age") }
+                        />
+                        <HeaderItem 
+                            label="Gender"
+                            sortData={ (data, sortField) => this.handleSortData(this.state.contacts, "gender") }
+                            classes = { this.computeSortClasses("gender") }
+                        />
+                        {/* <th onClick={ (data, sortField) => this.handleSortData(this.state.contacts, "firstName") }>First Name <i className={ this.computeSortClasses("firstName") }></i></th>
                         <th onClick={ (data, sortField) => this.handleSortData(this.state.contacts, "lastName") }>Last Name <i className={ this.computeSortClasses("lastName") }></i></th>
                         <th onClick={ (data, sortField) => this.handleSortData(this.state.contacts, "phone") }>Phone <i className={ this.computeSortClasses("phone") }></i></th>
                         <th onClick={ (data, sortField) => this.handleSortData(this.state.contacts, "age") }>Age <i className={ this.computeSortClasses("age") }></i></th>
-                        <th onClick={ (data, sortField) => this.handleSortData(this.state.contacts, "gender") }>Gender <i className={ this.computeSortClasses("gender") }></i></th>
+                        <th onClick={ (data, sortField) => this.handleSortData(this.state.contacts, "gender") }>Gender <i className={ this.computeSortClasses("gender") }></i></th> */}
                         {/* <th>Last Name</th>
                         <th>Phone</th>
                         <th>Age</th>

@@ -1,3 +1,9 @@
 .Table {
     margin: 30px 20px;
 }
+
+.DeleteRecord:hover {
+    background-color: #f44336;
+    cursor: pointer;
+    color: white;
+}
