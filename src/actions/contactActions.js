@@ -79,10 +79,10 @@ const createContactSuccess = (contact) => {
     }
 }
 
-const createContactSuccess = (contact) => {
+export const sortContactsData = (contacts, sortField) => {
     return {
-        type: actionTypes.CREATE_CONTACT_SUCCESS,
-        payload: { contact }
+        type: actionTypes.SORT_CONTACT_DATA,
+        payload: { contacts, sortField }
     }
 }
 

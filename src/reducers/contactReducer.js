@@ -1,9 +1,12 @@
 import * as actionTypes from '../actions/actionTypes';
+import * as helper from './reducerHelpers';
 
 const initialState = {
     contacts: [],
     isProcessing: false,
-    hasErrored: false
+    hasErrored: false,
+    sortField: null,
+    sortDirectionAsc: null
 }
 
 const contactReducer = ( state = initialState, action ) => {
@@ -36,6 +39,22 @@ const contactReducer = ( state = initialState, action ) => {
             return {
                 ...state,
                 contacts
+            }
+        case actionTypes.SORT_CONTACT_DATA:
+            return {
+                ...state,
+                contacts: helper.sortData(
+                    action.payload.contacts, 
+                    state.sortField, 
+                    action.payload.sortField,
+                    state.sortDirectionAsc),
+                sortField: action.payload.sortField,
+                sortDirectionAsc: helper.computeSortDirectionAsc(
+                    state.sortField, 
+                    action.payload.sortField,
+                    state.sortDirectionAsc
+                )
+
             }
         case actionTypes.CONTACTS_IS_PROCESSING:
             return {

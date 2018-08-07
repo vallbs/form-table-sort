@@ -37,43 +37,47 @@ class Table extends Component {
     }
 
     handleSortData = (data, sortField) => {
-        let sortedData = [...data];
-        let sortDirectionAsc = ( this.state.sortField === sortField ) 
-            ? ( this.state.sortDirectionAsc === null ) 
-                ? true
-                : !this.state.sortDirectionAsc
-            : true;
+        // let sortedData = [...data];
+        // let sortDirectionAsc = ( this.state.sortField === sortField ) 
+        //     ? ( this.state.sortDirectionAsc === null ) 
+        //         ? true
+        //         : !this.state.sortDirectionAsc
+        //     : true;
 
-        sortedData.sort( (a,b) => {
-            switch(sortField) {
-                case "firstName":
-                case "lastName":
-                case "phone":
-                    return sortDirectionAsc
-                        ? a[sortField].localeCompare(b[sortField])
-                        : b[sortField].localeCompare(a[sortField]);
-                case "age":
-                    return sortDirectionAsc
-                        ? a[sortField] - b[sortField] 
-                        : b[sortField] - a[sortField];
-                case "gender":
-                    return sortDirectionAsc
-                        ? ( a[sortField] === b[sortField] ? 0 : a[sortField] ? -1 : 1 )
-                        : a[sortField] === b[sortField] ? 0 : a[sortField] ? 1 : -1;
-            }
+        // sortedData.sort( (a,b) => {
+        //     switch(sortField) {
+        //         case "firstName":
+        //         case "lastName":
+        //         case "phone":
+        //             return sortDirectionAsc
+        //                 ? a[sortField].localeCompare(b[sortField])
+        //                 : b[sortField].localeCompare(a[sortField]);
+        //         case "age":
+        //             return sortDirectionAsc
+        //                 ? a[sortField] - b[sortField] 
+        //                 : b[sortField] - a[sortField];
+        //         case "gender":
+        //             return sortDirectionAsc
+        //                 ? ( a[sortField] === b[sortField] ? 0 : a[sortField] ? -1 : 1 )
+        //                 : a[sortField] === b[sortField] ? 0 : a[sortField] ? 1 : -1;
+        //     }
             
-        });
+        // });
         
-        this.setState( {
-            contacts: sortedData,
-            sortField,
-            sortDirectionAsc
-        } )
+        // this.setState( {
+        //     contacts: sortedData,
+        //     sortField,
+        //     sortDirectionAsc
+        // } )
+
+        this.props.sortContacts(data, sortField);
     }
 
     computeSortClasses = (sortField) => {
-        if(sortField === this.state.sortField) {
-            switch(this.state.sortDirectionAsc) {
+        // if(sortField === this.state.sortField) {
+        //     switch(this.state.sortDirectionAsc) {
+        if(sortField === this.props.sortField) {
+            switch(this.props.sortDirectionAsc) {
                 case true:
                     return "fa fa-sort-down";
                 case false:
@@ -179,14 +183,17 @@ class Table extends Component {
 
 const mapStateToProps = state => {
     return {
-        contacts: state.contactReducer.contacts
+        contacts: state.contactReducer.contacts,
+        sortField: state.contactReducer.sortField,
+        sortDirectionAsc: state.contactReducer.sortDirectionAsc
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
         fetchContacts: (url) => dispatch(contactActions.fetchContacts(url)),
-        deleteContact: (contactId) => dispatch(contactActions.deleteContact(contactId))
+        deleteContact: (contactId) => dispatch(contactActions.deleteContact(contactId)),
+        sortContacts: (contacts, sortField) => dispatch(contactActions.sortContactsData(contacts, sortField))
     }
 }
 
