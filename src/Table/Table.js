@@ -68,6 +68,15 @@ class Table extends Component {
         }        
     }
 
+    handleDeleteRecord = (recordId) => {
+        let records = [...this.state.contacts];
+        records = records.filter(record => {
+            return record.id !== recordId;
+        });
+
+        this.setState({ contacts: records});
+    }
+
     render() {
 
         let contacts = <p>loading</p>
@@ -80,10 +89,10 @@ class Table extends Component {
                         <td>{ contact.phone }</td>
                         <td>{ contact.age }</td>
                         <td>{ "" + contact.gender }</td>
-                        <td className="DeleteRecord">
-                            
+                        <td 
+                            onClick={ recordId => this.handleDeleteRecord(contact.id) }
+                            className="DeleteRecord">                            
                             <i className="fa fa-trash"></i> delete
-                            {/* <button onClick={ contactId => this.handleDeleteContact(contact.id) }>delete</button> */}
                         </td>
                     </tr>
                 );
@@ -119,15 +128,6 @@ class Table extends Component {
                             sortData={ (data, sortField) => this.handleSortData(this.state.contacts, "gender") }
                             classes = { this.computeSortClasses("gender") }
                         />
-                        {/* <th onClick={ (data, sortField) => this.handleSortData(this.state.contacts, "firstName") }>First Name <i className={ this.computeSortClasses("firstName") }></i></th>
-                        <th onClick={ (data, sortField) => this.handleSortData(this.state.contacts, "lastName") }>Last Name <i className={ this.computeSortClasses("lastName") }></i></th>
-                        <th onClick={ (data, sortField) => this.handleSortData(this.state.contacts, "phone") }>Phone <i className={ this.computeSortClasses("phone") }></i></th>
-                        <th onClick={ (data, sortField) => this.handleSortData(this.state.contacts, "age") }>Age <i className={ this.computeSortClasses("age") }></i></th>
-                        <th onClick={ (data, sortField) => this.handleSortData(this.state.contacts, "gender") }>Gender <i className={ this.computeSortClasses("gender") }></i></th> */}
-                        {/* <th>Last Name</th>
-                        <th>Phone</th>
-                        <th>Age</th>
-                        <th>Gender</th> */}
                         <th></th>
                     </tr>
                 </thead>
