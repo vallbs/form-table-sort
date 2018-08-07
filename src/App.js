@@ -4,12 +4,14 @@ import './App.css';
 
 //custom
 import Form from './Form/Form';
+import Table from './Table/Table';
 
 class App extends Component {
   render() {
     return (
       <div className="App">
         <Form />
+        <Table />
       </div>
     );
   }

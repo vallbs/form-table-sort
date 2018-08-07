@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import ErrorControl from './ErrorControl';
 import FormControl from './FormControl';
+import './Form.css';
 
 class Form extends Component {
     handleInputChange = e => {
@@ -65,7 +66,8 @@ class Form extends Component {
 
     render() {
         return (
-            <div className="container">
+            // <div className="container">
+            <div className="Form">
                 <form className="personForm">
                     <FormControl 
                         validationClassName={ this.formValidationClass(this.state.fieldsValid.firstNameValid, "form-group row") }
@@ -113,18 +115,6 @@ class Form extends Component {
                         inputType="checkbox"
                         fieldChanged={ e => this.handleInputChange(e)}/>
 
-                    {/* <div className="form-group row" >
-                        <label className="col-form-label col-2 col-sm-2">Gender :</label>
-                        <div className="col-sm-4">
-                            <div className="from-check">
-                                <label htmlFor="gender" className="form-check-label">
-                                    <input className="form-check-input" type="checkbox" name="gender"
-                                    onChange={ e => this.handleInputChange(e)}/>
-                                </label>
-                            </div>
-                        </div>
-                    </div> */}
-
                     <button type="submit" className="btn btn-primary" disabled={ !this.state.formIsValid } >
                         Create Person
                     </button>
@@ -137,7 +127,7 @@ class Form extends Component {
         firstName: "",
         lastName: "",
         phone: "",
-        age: 0,
+        age: null,
         gender: false,
         age: 0,
         fieldsValid: { 
