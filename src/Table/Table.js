@@ -10,53 +10,64 @@ class Table extends Component {
         console.log(contactId);
     }
 
-    handleSortData = (data, sortField) => {
-        console.log("sortField", sortField);
+    changeSortSettings = (sortField) => {
+        this.setState({
+            sortField,
+            sortDirectionAsc: ( sortField === this.state.sortField ) ? false : true
+        });
+    }
 
+    handleSortData = (data, sortField) => {
         let sortedData = [...data];
-        let sortDirectionAsc = this.state.sortDirection[sortField] === "asc";
-        sortedData.sort( (a, b) => {
+        let sortDirectionAsc = ( this.state.sortField === sortField ) 
+            ? ( this.state.sortDirectionAsc === null ) 
+                ? true
+                : !this.state.sortDirectionAsc
+            : true;
+
+        sortedData.sort( (a,b) => {
             switch(sortField) {
                 case "firstName":
                 case "lastName":
                 case "phone":
-                    return 
-                    sortDirectionAsc ? 
-                        b[sortField].localeCompare(a[sortField]) :
-                        a[sortField].localeCompare(b[sortField]);
-                    break;
+                    return sortDirectionAsc
+                        ? a[sortField].localeCompare(b[sortField])
+                        : b[sortField].localeCompare(a[sortField]);
                 case "age":
-                    return 
-                        sortDirectionAsc ?
-                        b[sortField] - a[sortField] :
-                        a[sortField] - b[sortField];
-                    break;
+                    return sortDirectionAsc
+                        ? a[sortField] - b[sortField] 
+                        : b[sortField] - a[sortField];
                 case "gender":
-                    return 
-                        sortDirectionAsc ?
-                        ( a[sortField] == b[sortField] ? 0 : a[sortField] ? -1 : 1 ) :
-                        a[sortField] == b[sortField] ? 0 : a[sortField] ? 1 : -1;
-                    break;
-                default:
-                    break;
-                
+                    return sortDirectionAsc
+                        ? ( a[sortField] == b[sortField] ? 0 : a[sortField] ? -1 : 1 )
+                        : a[sortField] == b[sortField] ? 0 : a[sortField] ? 1 : -1;
             }
-            return a[sortField].localeCompare(b[sortField]);
+            
         });
-
-        //sortedData = sortedData.reverse();
         
-        this.setState({ 
+        this.setState( {
             contacts: sortedData,
-            sortDirection: { 
-                ...this.state.sortDirection, 
-                [sortField]: this.state.sortDirection[sortField] === "asc" ? "desc" : "asc"
+            sortField,
+            sortDirectionAsc
+        } )
+    }
+
+    computeSortClasses = (sortField) => {
+        if(sortField === this.state.sortField) {
+            switch(this.state.sortDirectionAsc) {
+                case true:
+                    return "fa fa-sort-down";
+                case false:
+                    return "fa fa-sort-up";
+                default:
+                    return "";
             }
-        });
+        } else {
+            return "";
+        }        
     }
 
     render() {
-        console.log(this.state);
 
         let contacts = <p>loading</p>
         if(this.state.contacts) {
@@ -81,11 +92,11 @@ class Table extends Component {
                 <table className="table table-bordered table-hover table-sm table-responsive ">
                 <thead>
                     <tr>
-                        <th onClick={ (data, sortField) => this.handleSortData(this.state.contacts, "firstName") }>First Name <i className="fa fa-sort-up"></i></th>
-                        <th onClick={ (data, sortField) => this.handleSortData(this.state.contacts, "lastName") }>Last Name <i className="fa fa-sort-up"></i></th>
-                        <th onClick={ (data, sortField) => this.handleSortData(this.state.contacts, "phone") }>Phone <i className="fa fa-sort-up"></i></th>
-                        <th onClick={ (data, sortField) => this.handleSortData(this.state.contacts, "age") }>Age <i className="fa fa-sort-up"></i></th>
-                        <th onClick={ (data, sortField) => this.handleSortData(this.state.contacts, "gender") }>Gender <i className="fa fa-sort-up"></i></th>
+                        <th onClick={ (data, sortField) => this.handleSortData(this.state.contacts, "firstName") }>First Name <i className={ this.computeSortClasses("firstName") }></i></th>
+                        <th onClick={ (data, sortField) => this.handleSortData(this.state.contacts, "lastName") }>Last Name <i className={ this.computeSortClasses("lastName") }></i></th>
+                        <th onClick={ (data, sortField) => this.handleSortData(this.state.contacts, "phone") }>Phone <i className={ this.computeSortClasses("phone") }></i></th>
+                        <th onClick={ (data, sortField) => this.handleSortData(this.state.contacts, "age") }>Age <i className={ this.computeSortClasses("age") }></i></th>
+                        <th onClick={ (data, sortField) => this.handleSortData(this.state.contacts, "gender") }>Gender <i className={ this.computeSortClasses("gender") }></i></th>
                         {/* <th>Last Name</th>
                         <th>Phone</th>
                         <th>Age</th>
@@ -109,13 +120,8 @@ class Table extends Component {
             {firstName: "Kolia", lastName: "Dombrovskii", phone: "093 657-23-46", age: 26, gender: true, id: "4"},
             {firstName: "Ivan", lastName: "Voronich", phone: "096 123-45-67", age: 25, gender: false, id: "2"}
         ],
-        sortDirection: {
-            firstName: "asc",
-            lastName: null,
-            phone: null,
-            age: null,
-            gender: null
-        }
+        sortField: null,
+        sortDirectionAsc: null
     }
 }
 
