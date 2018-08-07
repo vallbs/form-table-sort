@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import axios from '../axios';
 
 import ErrorControl from './ErrorControl';
 import FormControl from './FormControl';
@@ -64,11 +65,43 @@ class Form extends Component {
         return finalClassName;
     }
 
+    handleCreteRecord = (e) => {
+        e.preventDefault();
+        console.log("handleCreteRecord");
+
+        const record = {
+            firstName: this.state.firstName,
+            lastName: this.state.lastName,
+            phone: this.state.phone,
+            age: this.state.age,
+            gender: this.state.gender
+        }
+
+        console.log(record);
+
+        axios.post("/contacts.json", record)
+            .then(response => {
+                console.log(response);
+                this.setState( {
+                    ...this.state,
+                    firstName: "",
+                    lastName: "",
+                    phone: "",
+                    age: null,
+                    gender: false,
+                    age: 0
+                });
+            })
+            .catch(error => console.log(error));
+    }
+
     render() {
         return (
             // <div className="container">
             <div className="Form">
-                <form className="personForm">
+                <form 
+                    onSubmit={ e => this.handleCreteRecord(e) }
+                    className="personForm">
                     <FormControl 
                         validationClassName={ this.formValidationClass(this.state.fieldsValid.firstNameValid, "form-group row") }
                         fieldName="firstName"
