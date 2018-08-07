@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import axios from '../axios';
 
-import ErrorControl from './ErrorControl';
 import FormControl from './FormControl';
 import './Form.css';
 

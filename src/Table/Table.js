@@ -56,8 +56,8 @@ class Table extends Component {
                         : b[sortField] - a[sortField];
                 case "gender":
                     return sortDirectionAsc
-                        ? ( a[sortField] == b[sortField] ? 0 : a[sortField] ? -1 : 1 )
-                        : a[sortField] == b[sortField] ? 0 : a[sortField] ? 1 : -1;
+                        ? ( a[sortField] === b[sortField] ? 0 : a[sortField] ? -1 : 1 )
+                        : a[sortField] === b[sortField] ? 0 : a[sortField] ? 1 : -1;
             }
             
         });
@@ -120,7 +120,7 @@ class Table extends Component {
         }
         return (
             <div className="Table col-sm-10 col-md-10"> 
-                <table className="table table-bordered table-sm table-responsive ">
+                <table className="table table-bordered table-sm table-responsive">
                 <thead>
                     <tr>
                         <HeaderItem 
