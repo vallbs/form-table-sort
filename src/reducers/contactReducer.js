@@ -2,26 +2,34 @@ import * as actionTypes from '../actions/actionTypes';
 
 const initialState = {
     contacts: [],
-    isLoading: false,
+    isProcessing: false,
     hasErrored: false
 }
 
 const contactReducer = ( state = initialState, action ) => {
     switch(action.type) {
         case actionTypes.FETCH_CONTACTS_SUCCESS:
-            console.log("FETCH_CONTACTS_SUCCESS", action);
             return {
                 ...state,
                 contacts: action.payload.contacts
             }
-        case actionTypes.CONTACTS_IS_LOADING:
-            console.log("CONTACTS_IS_LOADING", action);
+        case actionTypes.DELETE_CONTACT_SUCCESS:
+            console.log("DELETE_CONTACT_SUCCESS", action);
+            const contacts = state.contacts.filter(contact => {
+                return contact.id !== action.payload.contactId;
+            });
+            console.log("contacts", contacts);
+
             return {
                 ...state,
-                isLoading: action.payload.isLoading
+                contacts
+            }
+        case actionTypes.CONTACTS_IS_PROCESSING:
+            return {
+                ...state,
+                isProcessing: action.payload.isProcessing
             }
         case actionTypes.CONTACTS_HAS_ERRORED:
-            console.log("CONTACTS_HAS_ERRORED", action);
             return {
                 ...state,
                 hasErrored: action.payload.hasErrored

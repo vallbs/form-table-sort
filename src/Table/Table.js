@@ -87,16 +87,17 @@ class Table extends Component {
     }
 
     handleDeleteRecord = (recordId) => {
-        axios.delete("/contacts/" + recordId + ".json")
-            .then(response => {
-                let records = [...this.state.contacts];
-                records = records.filter(record => {
-                    return record.id !== recordId;
-                });
+        // axios.delete("/contacts/" + recordId + ".json")
+        //     .then(response => {
+        //         let records = [...this.state.contacts];
+        //         records = records.filter(record => {
+        //             return record.id !== recordId;
+        //         });
 
-                this.setState({ contacts: records});
-            })
-            .catch(error => console.log(error)); 
+        //         this.setState({ contacts: records});
+        //     })
+        //     .catch(error => console.log(error)); 
+        this.props.deleteContact(recordId);
     }
 
     render() {
@@ -184,7 +185,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        fetchContacts: (url) => dispatch(contactActions.fetchContacts(url))
+        fetchContacts: (url) => dispatch(contactActions.fetchContacts(url)),
+        deleteContact: (contactId) => dispatch(contactActions.deleteContact(contactId))
     }
 }
 

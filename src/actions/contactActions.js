@@ -3,7 +3,7 @@ import axios from '../axios';
 
 export const fetchContacts = (url) => {
     return dispatch => {
-        dispatch(contactsIsLoading(true));
+        dispatch(contactsIsProcessing(true));
 
         let contacts = null;
 
@@ -19,7 +19,22 @@ export const fetchContacts = (url) => {
 
                 // console.log(contacts);
                 dispatch(fetchContactsSuccess(contacts));
-                dispatch(contactsIsLoading(false));
+                dispatch(contactsIsProcessing(false));
+            })
+            .catch(error => {
+                dispatch(contactsHasErrored(true));
+            });
+    }
+}
+
+export const deleteContact = (contactId) => {
+    return dispatch => {
+        dispatch(contactsIsProcessing(false));
+
+        axios.delete("/contacts/" + contactId + ".json")
+            .then(response => {
+                dispatch(deleteContactSuccess(contactId));
+                dispatch(contactsIsProcessing(true));
             })
             .catch(error => {
                 dispatch(contactsHasErrored(true));
@@ -34,10 +49,17 @@ const fetchContactsSuccess = (contacts) => {
     }
 }
 
-export const contactsIsLoading = (bool) => {
+const deleteContactSuccess = (contactId) => {
     return {
-        type: actionTypes.CONTACTS_IS_LOADING,
-        payload: { isLoading: bool }
+        type: actionTypes.DELETE_CONTACT_SUCCESS,
+        payload: { contactId }
+    }
+}
+
+export const contactsIsProcessing = (bool) => {
+    return {
+        type: actionTypes.CONTACTS_IS_PROCESSING,
+        payload: { isProcessing: bool }
     }
 }
 
