@@ -2,9 +2,25 @@ import React, { Component } from 'react';
 import './Table.css';
 import HeaderItem from './HeaderItem';
 
+import axios from '../axios';
+
 class Table extends Component {
     componentDidMount = () => {
         //this.handleSortData(this.state.contacts, "firstName")
+        let contacts = null;
+        axios.get("/contacts.json")
+            .then(response => {
+                const data = response.data;
+                contacts = Object.keys(data).map(key => {
+                    return {
+                        ...data[key],
+                        id: key
+                    }
+                });
+
+                this.setState({ contacts });
+            })
+            .catch(error => console.log(error));
     }
 
     handleDeleteContact = (contactId) => {
@@ -140,13 +156,13 @@ class Table extends Component {
     }
 
     state = {
-        contacts: [
-            {firstName: "Dima", lastName: "Severniuk", phone: "093 277-44-62", age: 27, gender: true, id: "3"},
-            {firstName: "Roma", lastName: "Dombrovskii", phone: "093 657-23-46", age: 26, gender: true, id: "5"},
-            {firstName: "Julia", lastName: "Voronich", phone: "096 123-45-67", age: 25, gender: false, id: "1"},
-            {firstName: "Kolia", lastName: "Dombrovskii", phone: "093 657-23-46", age: 26, gender: true, id: "4"},
-            {firstName: "Ivan", lastName: "Voronich", phone: "096 123-45-67", age: 25, gender: false, id: "2"}
-        ],
+        // contacts: [
+        //     {firstName: "Dima", lastName: "Severniuk", phone: "093 277-44-62", age: 27, gender: true, id: "3"},
+        //     {firstName: "Roma", lastName: "Dombrovskii", phone: "093 657-23-46", age: 26, gender: true, id: "5"},
+        //     {firstName: "Julia", lastName: "Voronich", phone: "096 123-45-67", age: 25, gender: false, id: "1"},
+        //     {firstName: "Kolia", lastName: "Dombrovskii", phone: "093 657-23-46", age: 26, gender: true, id: "4"},
+        //     {firstName: "Ivan", lastName: "Voronich", phone: "096 123-45-67", age: 25, gender: false, id: "2"}
+        // ],
         sortField: null,
         sortDirectionAsc: null
     }
