@@ -3,24 +3,26 @@ import './Table.css';
 import HeaderItem from './HeaderItem';
 
 import axios from '../axios';
+import { connect } from 'react-redux';
+import * as contactActions from '../actions/contactActions';
 
 class Table extends Component {
     componentDidMount = () => {
-        //this.handleSortData(this.state.contacts, "firstName")
-        let contacts = null;
-        axios.get("/contacts.json")
-            .then(response => {
-                const data = response.data;
-                contacts = Object.keys(data).map(key => {
-                    return {
-                        ...data[key],
-                        id: key
-                    }
-                });
+        // let contacts = null;
+        // axios.get("/contacts.json")
+        //     .then(response => {
+        //         const data = response.data;
+        //         contacts = Object.keys(data).map(key => {
+        //             return {
+        //                 ...data[key],
+        //                 id: key
+        //             }
+        //         });
 
-                this.setState({ contacts });
-            })
-            .catch(error => console.log(error));
+        //         this.setState({ contacts });
+        //     })
+        //     .catch(error => console.log(error));
+        this.props.fetchContacts("/contacts");
     }
 
     handleDeleteContact = (contactId) => {
@@ -100,8 +102,10 @@ class Table extends Component {
     render() {
 
         let contacts = <p>loading</p>
-        if(this.state.contacts) {
-            contacts = this.state.contacts.map(contact => {
+        // if(this.state.contacts) {
+        if(this.props.contacts) {
+            // contacts = this.state.contacts.map(contact => {
+            contacts = this.props.contacts.map(contact => {
                 return (
                     <tr key={ contact.id }>
                         <td>{ contact.firstName }</td>
@@ -172,4 +176,16 @@ class Table extends Component {
     }
 }
 
-export default Table;
+const mapStateToProps = state => {
+    return {
+        contacts: state.contactReducer.contacts
+    }
+}
+
+const mapDispatchToProps = dispatch => {
+    return {
+        fetchContacts: (url) => dispatch(contactActions.fetchContacts(url))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Table);

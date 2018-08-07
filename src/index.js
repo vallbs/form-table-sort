@@ -11,10 +11,14 @@ import 'bootstrap/dist/css/bootstrap-theme.css';
 //import font awesome styles
 import 'font-awesome/css/font-awesome.min.css';
 import { Provider } from 'react-redux';
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
 import rootReducer from './reducers/index';
+import thunk from 'redux-thunk';
 
-const store = createStore(rootReducer);
+const store = createStore(
+    rootReducer,
+    applyMiddleware(thunk)
+);
 
 const app = (
     <Provider store={store}>
