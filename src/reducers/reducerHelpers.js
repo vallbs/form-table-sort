@@ -1,11 +1,5 @@
 export const sortData = (data, currentSortField, fieldToSort, sortDirectionAsc) => {
     let sortedData = [...data];
-    // let sortDirectionAsc = ( currentSortField === fieldToSort ) 
-    //     ? ( sortDirectionAsc === null ) 
-    //         ? true
-    //         : !sortDirectionAsc
-    //     : true;
-
     const sortDirAsc = computeSortDirectionAsc(currentSortField, fieldToSort, sortDirectionAsc);
 
     sortedData.sort( (a,b) => {

@@ -8,20 +8,6 @@ import * as contactActions from '../actions/contactActions';
 
 class Table extends Component {
     componentDidMount = () => {
-        // let contacts = null;
-        // axios.get("/contacts.json")
-        //     .then(response => {
-        //         const data = response.data;
-        //         contacts = Object.keys(data).map(key => {
-        //             return {
-        //                 ...data[key],
-        //                 id: key
-        //             }
-        //         });
-
-        //         this.setState({ contacts });
-        //     })
-        //     .catch(error => console.log(error));
         this.props.fetchContacts("/contacts");
     }
 
@@ -37,51 +23,17 @@ class Table extends Component {
     }
 
     handleSortData = (data, sortField) => {
-        // let sortedData = [...data];
-        // let sortDirectionAsc = ( this.state.sortField === sortField ) 
-        //     ? ( this.state.sortDirectionAsc === null ) 
-        //         ? true
-        //         : !this.state.sortDirectionAsc
-        //     : true;
-
-        // sortedData.sort( (a,b) => {
-        //     switch(sortField) {
-        //         case "firstName":
-        //         case "lastName":
-        //         case "phone":
-        //             return sortDirectionAsc
-        //                 ? a[sortField].localeCompare(b[sortField])
-        //                 : b[sortField].localeCompare(a[sortField]);
-        //         case "age":
-        //             return sortDirectionAsc
-        //                 ? a[sortField] - b[sortField] 
-        //                 : b[sortField] - a[sortField];
-        //         case "gender":
-        //             return sortDirectionAsc
-        //                 ? ( a[sortField] === b[sortField] ? 0 : a[sortField] ? -1 : 1 )
-        //                 : a[sortField] === b[sortField] ? 0 : a[sortField] ? 1 : -1;
-        //     }
-            
-        // });
-        
-        // this.setState( {
-        //     contacts: sortedData,
-        //     sortField,
-        //     sortDirectionAsc
-        // } )
-
         this.props.sortContacts(data, sortField);
     }
 
     computeSortClasses = (sortField) => {
-        // if(sortField === this.state.sortField) {
-        //     switch(this.state.sortDirectionAsc) {
         if(sortField === this.props.sortField) {
             switch(this.props.sortDirectionAsc) {
                 case true:
-                    return "fa fa-sort-down";
+                    // return "fa fa-sort-down";
+                    return "fa fa-arrow-down";
                 case false:
-                    return "fa fa-sort-up";
+                    return "fa fa-arrow-up";
                 default:
                     return "";
             }
@@ -91,16 +43,6 @@ class Table extends Component {
     }
 
     handleDeleteRecord = (recordId) => {
-        // axios.delete("/contacts/" + recordId + ".json")
-        //     .then(response => {
-        //         let records = [...this.state.contacts];
-        //         records = records.filter(record => {
-        //             return record.id !== recordId;
-        //         });
-
-        //         this.setState({ contacts: records});
-        //     })
-        //     .catch(error => console.log(error)); 
         this.props.deleteContact(recordId);
     }
 
@@ -168,17 +110,10 @@ class Table extends Component {
         );
     }
 
-    state = {
-        // contacts: [
-        //     {firstName: "Dima", lastName: "Severniuk", phone: "093 277-44-62", age: 27, gender: true, id: "3"},
-        //     {firstName: "Roma", lastName: "Dombrovskii", phone: "093 657-23-46", age: 26, gender: true, id: "5"},
-        //     {firstName: "Julia", lastName: "Voronich", phone: "096 123-45-67", age: 25, gender: false, id: "1"},
-        //     {firstName: "Kolia", lastName: "Dombrovskii", phone: "093 657-23-46", age: 26, gender: true, id: "4"},
-        //     {firstName: "Ivan", lastName: "Voronich", phone: "096 123-45-67", age: 25, gender: false, id: "2"}
-        // ],
-        sortField: null,
-        sortDirectionAsc: null
-    }
+    // state = {
+    //     sortField: null,
+    //     sortDirectionAsc: null
+    // }
 }
 
 const mapStateToProps = state => {
